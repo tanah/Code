@@ -12,14 +12,25 @@ dTalaX = 6.3;	//Diámetro del taladro del bloque X
 dTalaY = 6.4;	//Diámetro del taladro del bloque Y 
 
 
+
+y = 148;        //Aproximado, un poco a ojo
+x = 210;//round(155*cos(38)+2*15);   //Distancia en X del marco al fondo de la base de la impresora. En modelo inicial, 152
+
+alfa = atan(y/x);
+
+xTalaX = round(x-155*cos(alfa))/2;      //Posición en X del taladro del bloque X
+echo (xTalaX);
+echo (alfa);
+
+
 // Bloque a lo largo del eje X
 module bloqueX(){
 	// Bloque y taladro
 	difference () {
 		translate([0, -6, 0])
-		cube([23, 6, 32]);
+		cube([xTalaX+8, 6, 32]);
 	
-		translate([15, 1, 8])
+		translate([xTalaX, 1, 8])
 		rotate( 90, [1, 0, 0])
 		cylinder(h = 8, r = dTalaX/2, $fn=100);
 	}
@@ -70,9 +81,9 @@ module pieza(){
 		}	
 
 		//Chaflan que afecta al bloqueX() y al redondeoXY()
-		translate([23, -7, 10.56])
-		rotate( 38, [0, -1, 0])
-		cube([18, 8, 34]);	
+		translate([xTalaX+8, -7, 10.56])
+		rotate( 90-alfa, [0, -1, 0])
+		cube([18, 8, sqrt(23*23+xTalaX*xTalaX)]);	
 	}
 }
 
