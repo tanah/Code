@@ -17,15 +17,16 @@ dMot = 3.4;
 dCab = 20;		// Diámetro de la cabeza (20)
 hcub = 6.8;		// Anchura del cuadrado (6.8)
 
+dz = 26;        // Desplazamiento del motor en el eje Z en caso de usar varillas de husillo de 300mm
 
 // Bloque a lo largo de X
 module bloqueX(){
 	difference(){
 		// Bloque a lo largo del eje x
 		translate([0, 45, 0])
-		cube([40, 5, 33]);
+		cube([40, 5, 33+dz]);
 		// Chaflán 
-		translate([40, 44, 6])
+		translate([40, 44, 6+dz])
 		rotate( -49.84, [0, 1, 0])
 		cube([22, 7, 43]);
 	}
@@ -34,21 +35,21 @@ module bloqueX(){
 	difference(){
 		// Cilindro
 		translate([0, 45, 0])
-		cylinder(h = 33, r = 5, $fn=100);
+		cylinder(h = 33+dz, r = 5, $fn=100);
 		// Vaciado en forma de media luna
 		translate([-5, 40, -1])
-		cube([10, 5, 35]);
+		cube([10, 5, 35+dz]);
 	}
 }
 // Bloque a lo largo de Y o bloque tornillo
 module bloqueY(){
 	difference(){
 		// Bloque tornillo en el eje y
-		cube([8, 45, 33]);
+		cube([8, 45, 33+dz]);
 		// Chaflán 
-		translate([-1, 0, 13])
+		translate([-1, 0, 13+dz])
 		rotate( 53.13, [1, 0, 0])
-		cube([10, 26, 14]);
+		cube([10, 26, 14+dz]);
 	}
 }
 
@@ -108,7 +109,7 @@ module redondeoXYT(){
 
 // Alojamiento del tornillo
 module tornillo(){
-	translate([5.5, 27, 13])
+	translate([5.5, 27, 13+dz])
 	union() {
 		cube([20, hcub, hcub], center = true);
 		rotate( 90, [0, 1, 0])
